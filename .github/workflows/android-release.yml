@@ -41,4 +41,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Check flutter version
-        run: flutter --version
+        run: flutter build apk
