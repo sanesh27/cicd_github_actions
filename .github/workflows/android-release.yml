@@ -41,11 +41,12 @@ jobs:
 
       - name: Dart format
         run: |
-        if dart format --set-exit-if-changed .; then
-        echo "Indentation check passed."
-        else
-        echo "Indentation check failed. Please run 'dart format' to fix code formatting issues."
-        exit 1
+          if dart format --set-exit-if-changed .; then
+            echo "Indentation check passed."
+          else
+            echo "Indentation check failed. Please run 'dart format' to fix code formatting issues."
+            exit 1
+          fi
 
       # Runs a set of commands using the runners shell
       - name: Check flutter version
