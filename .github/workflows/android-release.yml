@@ -70,6 +70,7 @@ jobs:
         run: |
           git config user.name "Sanish Maharjan"
           git config user.email "sanish.maharjan27@gmail.com"
+          git add .
           git commit -m "Update: code format"
           git push
         shell: bash
