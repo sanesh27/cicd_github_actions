@@ -14,31 +14,28 @@ on:
 # 4
 jobs:
 
-  version:
-    name: Create version number
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.7
-        with:
-          versionSpec: "5.x"
-
-      - name: Use GitVersion
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.7
-
-      - name: Create version.txt with nuGetVersion
-        run: echo ${{ steps.gitversion.outputs.nuGetVersion }} > version.txt
-
-      - name: Upload version.txt
-        uses: actions/upload-artifact@v2
-        with:
-          name: gitversion
-          path: version.txt
+#  version:
+#    name: Create version number
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Install GitVersion
+#        uses: gittools/actions/gitversion/setup@v0.9.7
+#        with:
+#          versionSpec: "5.x"
+#      - name: Use GitVersion
+#        id: gitversion
+#        uses: gittools/actions/gitversion/execute@v0.9.7
+#      - name: Create version.txt with nuGetVersion
+#        run: echo ${{ steps.gitversion.outputs.nuGetVersion }} > version.txt
+#      - name: Upload version.txt
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: gitversion
+#          path: version.txt
 
   # 5
   build:
@@ -68,6 +65,14 @@ jobs:
 
       - name: Dart format
         run: dart format .
+
+      - name: Commit and push identation
+        run: |
+          git config user.name "Sanish Maharjan"
+          git config user.email "sanish.maharjan27@gmail.com"
+          git commit -m "Update: code format"
+          git push
+        shell: bash
 
       # Runs a set of commands using the runners shell
       - name: Check flutter version
