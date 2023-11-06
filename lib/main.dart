@@ -67,8 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
     setState(() {
-      if (_counter > 10) return;
-      _counter++;
+      if (_counter > 10) return;_counter++;
     });
   }
 
