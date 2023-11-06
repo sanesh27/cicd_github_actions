@@ -10,6 +10,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+
+
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -58,6 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
+
+
+
+
     setState(() {
       if (_counter > 10) return;
       _counter++;
