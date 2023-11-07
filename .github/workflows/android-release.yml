@@ -71,11 +71,8 @@ jobs:
           #Increment PATCH version
           NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$3=$3+1; OFS="."; print $0}')
           
-          #Update version in pubspec
-#          sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" pubspec.yaml
-          
           echo "new_version::$NEW_VERSION"
-          echo "current_version::$CURRENT_VERSION"
+          echo "new_version::$NEW_VERSION"
         shell: bash
 
       - name: Dart format
