@@ -68,8 +68,17 @@ jobs:
           # current version from pubspec
           CURRENT_VERSION=$(grep 'version: ' pubspec.yaml | sed 's/version: //')
           
+          MAJOR=$(echo $CURRENT_VERSION | cut -d. -f1)
+          MINOR=$(echo $CURRENT_VERSION | cut -d. -f2)
+          PATCH=$(echo $CURRENT_VERSION | cut -d. -f3)
+          BNUM=$(echo $CURRENT_VERSION | cut -d+ -f4)
+          
+          ((PATCH++))
+          ((BNUM++))
+          
           #Increment PATCH version
-          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$3=$3+1; OFS="."; ORS="."; print $1}')
+#          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$3=$3+1; OFS="."; ORS="."; print $1}')
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}+${BNUM}"     
           
           echo "new_version::$NEW_VERSION"
           echo "current_version::$CURRENT_VERSION"
