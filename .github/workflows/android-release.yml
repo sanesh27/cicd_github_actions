@@ -77,7 +77,6 @@ jobs:
           ((BNUM++))
           
           #Increment PATCH version
-#          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$3=$3+1; OFS="."; ORS="."; print $1}')
           NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}+${BNUM}"     
           
           echo "new_version::$NEW_VERSION"
