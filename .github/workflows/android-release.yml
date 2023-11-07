@@ -63,41 +63,34 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Check and Format Dart Files
+      - name: Increment Version
         run: |
-          CHANGES=$(git diff --name-only)
+          # current version from pubspec
+          CURRENT_VERSION=$(grep 'version: ' pubspec.yaml | sed 's/version: //')
           
-          if [[ -n $CHANGES ]]; then
-            echo "Formatting changed files..."
-            dart format $CHANGES
+          #Increment PATCH version
+          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$3=$3+1; OFS="."; print $0}')
           
-            if [[ $(git diff --name-only) ]]; then
-              git config user.name "sanesh27"
-              git config user.email "sanish.maharjan27@gmail.com"
-              git commit -m "Auto formatting code"
-              git push https://github.com/sanesh27/cicd_github_actions.git HEAD:master
-            else
-              echo "No changes after formatting."
-            fi
-          else
-            echo "No dart files to format."
-          fi
+          #Update version in pubspec
+          sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" pubspec.yaml
+          
+          echo "::set-output name=new_version::$NEW_VERSION"
         shell: bash
 
-#      - name: Dart format
-#        run: dart format .
-#
-#      - name: Commit and push identation
-#        run: |
-#          git config user.name "sanesh27"
-#          git config user.email "sanish.maharjan27@gmail.com"
-#          git add .
-#          git commit -m "Update: code format"
-#        shell: bash
-#
-#      - name: Push Changes
-#        run: |
-#            git push --force https://github.com/sanesh27/cicd_github_actions.git HEAD:master
+      - name: Dart format
+        run: dart format .
+
+      - name: Commit and push indentation
+        run: |
+          git config user.name "sanesh27"
+          git config user.email "sanish.maharjan27@gmail.com"
+          git add .
+          git commit -m "Update: code format and version update"
+        shell: bash
+
+      - name: Push Changes
+        run: |
+            git push --force https://github.com/sanesh27/cicd_github_actions.git HEAD:master
 
       # Runs a set of commands using the runners shell
 #      - name: Check flutter version
