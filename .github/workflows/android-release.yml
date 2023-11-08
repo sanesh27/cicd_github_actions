@@ -21,20 +21,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.7
-      - name: Use GitVersion
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.7
-      - name: Create version.txt with nuGetVersion
-        run: |
-          echo ${{ steps.gitversion.outputs.nuGetVersion }} > version.txt
-          echo "${{ steps.gitversion.outputs.nuGetVersion }}"
-      - name: Upload version.txt
-        uses: actions/upload-artifact@v2
+      - name: Get version txt
+        uses: actions/download-artifact@v2
         with:
           name: gitversion
-          path: version.txt
+      - name: Create new file without newline char from version.txt
+        run: tr -d '\n' < version.txt > version1.txt
+
+      - name: Read version
+        id: version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: version1.txt
+
+      - name: Update version in YAML
+        run: sed -i 's/99.99.99+99/${{ setps.version.outputs.content }}+${{ github.run_number }}/g' pubspec.yaml
+
 
   # 5
   build:
