@@ -3,8 +3,6 @@ name: Android Release
 # 1
 on:
   # 2
-  push:
-    branches: [ "merge-check" ]
   pull_request:
     branches: [ "master" ]
     types:
